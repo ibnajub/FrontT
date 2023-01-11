@@ -1,0 +1,13 @@
+
+
+@font-face {
+    font-family: "PlayfairDisplay";
+    src: url("/fonts/PlayfairDisplay-VariableFont_wght.ttf") format("ttf"),
+        ;
+* {
+        margin: 10;
+    }
+
+        h2 {
+            font-family: PlayfairDisplay, cursive;
+        }
