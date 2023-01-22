@@ -10,7 +10,7 @@ https://fonts.google.com/specimen/Playfair+Display?query=Playfair+Display
 
 http://127.0.0.1:5500/Project1/lesson%201.2.html
 
-Урок 1
+<https://guruweba.com/html/teg-li-html-element-spiska/>
 
 <https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Selectors>
 
@@ -41,6 +41,8 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 <http://doc.a-level.com.ua/five-async-architecture-promises#h2-21>
 <https://jsonplaceholder.typicode.com/>
 <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status>
+
+<http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7>!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
 
 > Кирилл Фроленков:
 const todo = {
