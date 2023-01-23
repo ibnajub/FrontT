@@ -1,9 +1,45 @@
-/* @font-face {
-    font-family: "PlayfairDisplay";
-    src: url("/fonts/PlayfairDisplay-VariableFont_wght.ttf") format("ttf"),
-        ; */
-
-.menu {
-  color: blue;
-  color: aqua;
+@font-face {
+  font-family: "playfair_displayregular";
+  src: url("../fonts/playfairdisplay-variablefont_wght-webfont.woff")
+      format("woff2"),
+    url("../fonts/playfairdisplay-variablefont_wght-webfont.woff")
+      format("woff"),
+    url("../fonts/playfairdisplay-variablefont_wght-webfont.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+.menu ul {
+    
+    display: flex;
+    background: #ffd7a7;
+    /*убираем маркеры списка*/
+    list-style: none;    
+    /* margin: 0; */
+    /*убираем верхнее и нижнее поле, равное 1em*/
+    /* padding-left: 0; */
+    /* убираем левый отступ, равный 40px*/
+  }
+  
+
+.menu a {
+  /* убираем подчеркивание текста ссылок */
+  text-decoration: none;
+  padding: 1em;
+  display: block;
+  color: #9b4222;
+  border-right: 1px solid #ffab51;
+  background: rgba(255, 171, 81, 0.3);
+}
+
+.menu a:hover {
+  background: #ffab51;
+}
+

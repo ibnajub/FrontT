@@ -21,10 +21,11 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 <https://www.w3schools.com/css/tryit.asp?filename=trycss_float_images_side>
 <https://www.w3schools.com/css/css_positioning.asp>
 <https://developer.mozilla.org/ru/docs/Web/CSS/Using_CSS_custom_properties>
+Шрифты -- <https://www.fontsquirrel.com/tools/webfont-generator>
 
 Урок 3
 <https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow>
-<https://www.fontsquirrel.com/tools/webfont-generator>
+
 
 <https://developer.mozilla.org/en-US/docs/Web/CSS/transition>
 
@@ -46,7 +47,7 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 
 <http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7>!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
 
-> Кирилл Фроленков:
+
 const todo = {
 
         title,
@@ -54,7 +55,7 @@ const todo = {
         completed: true || false,
     };
 
-> Кирилл Фроленков:
+
 async function showAvatar() {
 
   // запрашиваем JSON с данными пользователя
