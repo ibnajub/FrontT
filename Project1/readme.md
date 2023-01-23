@@ -14,6 +14,8 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 
 <https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Selectors>
 
+<https://html5book.ru/gorizontalnoe-menu/>
+
 Урок 2
 <https://www.w3schools.com/css/tryit.asp?filename=trycss_float_boxes>
 <https://www.w3schools.com/css/tryit.asp?filename=trycss_float_images_side>
