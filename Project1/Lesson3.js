@@ -53,7 +53,11 @@ console.log(addOneForAll(2, 3, 4, 5, 10));
 
 // Написать функцию getSum, которая может принять неограниченное кол-во аргументов и возвращает их сумму.
 getSum = (...mArgs) => {
-
+    let sum = 0
+    mArgs.forEach(function (item, i, arr) {
+        sum += item
+    })
+    return sum
 }
 
 const val = getSum(1, 2, 3, 4);
@@ -61,10 +65,23 @@ console.log(val); // 10
 
 
 // Есть массив [1, 'hello', 2, 3, 4, '5', '6', 7, null]. Отфильтровать массив так, чтобы остались только числа. Сделать можно любым способом из того, что учили.
-// const arr = [1, 'hello', 2, 3, 4, '5', '6', 7, null];
-// const numberArray = ....; // [1, 2, 3, 4, 7];
+// [1, 2, 3, 4, 7];
+const arr = [1, 'hello', 2, 3, 4, '5', '6', 7, null];
+
+const numberArray = arr.filter(function (item, i, arr) {
+    return (typeof item === 'number')
+});
+
+console.log(numberArray); // 10
 
 // Написать функцию arrayTesting, которая принимает в себя любой массив (в аргументы). Функция проверяет есть ли в массиве хоть одно true значение и если оно есть,
 // то возвращаем из функции строку 'Нашли true значение', если его нет - 'Ничего нет'
-// const haveTrueValue = arrayTesting([0, false, null, 1]); // Нашли true значение (потому что есть хотябы одно true значение - 1)
-// const dontHaveTrueValue = arrayTesting([0, false, null, 0]); // Ничего нет
+arrayTesting = (argM) => {
+    return argM.some(el => el == true) ? 'Нашли true значение' : 'Ничего нет'
+}
+
+const haveTrueValue = arrayTesting([0, false, null, 1]); // Нашли true значение (потому что есть хотябы одно true значение - 1)
+console.log(haveTrueValue); 
+
+const dontHaveTrueValue = arrayTesting([0, false, null, 0]); // Ничего нет
+console.log(dontHaveTrueValue); 
