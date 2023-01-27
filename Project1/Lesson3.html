@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="lesson8.css"> -->
+    <link rel="stylesheet" href="Lesson3.css">
 </head>
+
 <body>
-    <input type="text" id="firstname" name="firstname"/>
-    <input type="text" id="name" name="name"/>
-    <input type="text" id="secondname" name="secondname"/>
-    <input type="text" id="secondname" name="secondname"/>
-
-    <input type="text" id="message" name="message"/>
-    <button type="button" id="button">Press</button>
-    <button type="text" id="getbutton">Submit</button>
-
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla repellat exercitationem veritatis?</p>
-    <script src="Lesson3.js"></script>    
+    <h3>Регистрация</h3>
+    <form>
+        Фамилия: <input type="text" id="name" name="firstname" />
+        Имя: <input type="text" id="name" name="name" />
+        Отчество: <input type="text" id="secondname" name="secondname" />
+        <!-- <input type="date" id="bethday" name="bethday"/>             -->
+        <label for="year">Дата рождения:</label>
+        <select id="year" name="year">
+            <option selected>2008</option>
+            <option>2009</option>
+            <option>2010</option>
+            <option>2011</option>
+        </select>
+        <select id="month" name="month">
+            <option selected>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+        </select>
+        Email: <input type="email" id="Email" name="Email" pattern=".+@globex\.com" size="30" required />
+        Пароль: <input type="password" id="password" name="password" required />
+        Подтвердите пароль: <input type="password" id="password2" name="password2" required />
+        Телефон: <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+        Адрес: <input type="text" id="address" name="address" required minlength="4" maxlength="100" size="30" />
+        Пол:<input type="radio" id="male" name="male" checked />Мужской
+        <input type="radio" id="female" name="female" />Женский
+        <input type="checkbox" id="message" name="message" /> Я согласен с <a href="#">условиями</a>
+        <input type="submit" id="button">Регистрация</input>
+        <input type="reset" id="getbutton">Очистить форму</input>
+    </form>
+    <script src="Lesson3.js"></script>
 </body>
+
 </html>

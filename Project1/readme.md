@@ -24,6 +24,7 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 Шрифты -- <https://www.fontsquirrel.com/tools/webfont-generator>
 
 Урок 3
+<https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password>
 <https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow>
 
 
