@@ -34,6 +34,8 @@ http://127.0.0.1:5500/Project1/lesson%201.2.html
 <https://www.w3schools.com/jsref/event_onchange.asp>
 <https://www.w3schools.com/jsref/event_oninput.asp>
 
+<https://learn.javascript.ru/object>
+
 Урок 5
 <https://stackoverflow.com/questions/34676752/can-i-use-an-html-input-type-date-to-collect-only-a-year>
 <https://doka.guide/js/descriptors/>
