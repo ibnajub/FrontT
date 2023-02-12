@@ -209,8 +209,7 @@ const namesOfDays = {
     "ru": ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
     "en": ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 }
-// ------------------------------------------------
-//  Пример 1
+
 function getNameOfDay(lang, datNumber) {
     return namesOfDays[lang][datNumber - 1]
 }
