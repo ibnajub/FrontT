@@ -25,38 +25,46 @@ const rabbit2 = new Animal('Name', 'Age', 'Colour');
 //     другие методы можете добавить, если хотите (метод для квадратного корня и т.д.)
 console.log("Блок 1 Задание 2");
 function Calculator() {
-    read() {
-        this.value1 = prompt('Ввежите знач1', 0);
-        this.value2 = prompt('Ввежите знач2', 0);
-    },
-    // setAction() {
-    //     this.action = prompt('Ввежите action', '+');
-    // },
-    // doAction() {
-    //     switch (this.action) {
-    //         case '+':
-    //             return sum();
-    //         case '*':
-    //             return mul();
-    //         case '-':
-    //             return min();
-    //     }
-    // },
-    // sum() {
-    //     return this.value1 + this.value2
-    // },
-    // mul() {
-    //     return this.value1 * this.value2
-    // },
-    // min() {
-    //     return this.value1 - this.value2
-    // },
+    this.read = function () {
+        // this.value1 = Number(prompt('Ввежите знач1', 0));
+        // this.value2 = Number(prompt('Ввежите знач2', 0));
+        // test
+        this.value1 = 3;
+        this.value2 = 3;
+    };
+    this.setAction = function () {
+        // this.action = prompt('Ввежите action(+-*)', '+');
+        this.action = '+';
+    };
+    this.doAction = function () {
+        switch (this.action) {
+            case '+':
+                return sum(this.value1, this.value2);
+            case '*':
+                return mul(this.value1, this.value2);
+            case '-':
+                return min(this.value1, this.value2);
+            default:
+                console.log('no action')
+        }
+    };
+    //эти функции не видят this и не доступны для вызова из обьекта
+    function sum(value1, value2) {
+        return value1 + value2
+    };
+    function mul(value1, value2) {
+        return value1 * value2
+    };
+    function mul(value1, value2) {
+        return value1 - value2
+    };
 }
 
 const calculator = new Calculator();
-// calculator.read();
-// calculator.setAction();
-// console.log(calculator.doAction()); // результат
+calculator.read();
+calculator.setAction();
+console.log(calculator.doAction()); // результат
+
 
 //     Создать функцию конструктор Nums, которая принимает бесконечное множество аргументов, и они записываются в свойство args в виде массива
 // Добавить в прототип для всех объектов, которые создадим от конструктора Nums, 2 метода:
@@ -64,12 +72,47 @@ const calculator = new Calculator();
 //     метод myFilterReverse должен отфильтровать массив и оставить только целые числа и развернуть массив (было [1, 2, 3] -> стало [3, 2, 1])
 // Метод .reverse использовать нельзя :)
 // только целые числа -> Number.isInteger(1); // true Number.IsInteger(1.2); // false
-// function Nums(....) {
-//   this.args = ....
-// }
-// const test = new Nums(.....);
-// const sum = test.getSum(); // найдет сумму всех элементов в свойстве args, которые являются целыми  числами.
-// const newArr = test.myFilterReverse(); // Отфильтруем массив в свойстве args и развернет массив (было [1, 2, 3] -> стало [3, 2, 1])
+console.log("Блок 1 Задание 3");
+// let method2 = {
+//     assd: 22,
+//     getSum: function () {
+//         return 111;
+//     },
+// };
+
+function Nums(...args) {
+    // this.prototype = method2;
+    this.args = args;
+
+
+}
+
+
+Nums.prototype.getSum = function () {
+    return this.args.reduce((accumulator, currentValue) =>
+        accumulator + ((Number.isInteger(currentValue)) ? currentValue : 0));
+}
+
+
+Nums.prototype.myFilterReverse = function () {
+    arr = this.args;
+    arr = arr.filter(function (item, i, arr) {
+        return (Number.isInteger(item))
+    });
+    // разворот массива
+    var temp;
+    for (var i = 0, j = arr.length - 1; i < j; i++, j--) {
+        temp = arr[j];
+        arr[j] = arr[i];
+        arr[i] = temp;
+    }
+    return arr
+}
+
+const test1sdsd = new Nums(2, 3, 4, 32.3);
+console.log(test1sdsd.getSum()); // найдет сумму всех элементов в свойстве args, которые являются целыми  числами.
+
+console.log(test1sdsd.myFilterReverse()); // Отфильтруем массив в свойстве args и развернет массив (было [1, 2, 3] -> стало [3, 2, 1])
 
 //     Есть массив [1, 1, 2, 2, 3]
 

@@ -1,5 +1,7 @@
 Литература
 
+<https://learn.javascript.ru/js>
+
 Урок 1
 https://html5book.ru/osnovy-css/
 https://github.com/alex-sefer-98226/fe_for_be-course/blob/main/homework/lesson_1.md
