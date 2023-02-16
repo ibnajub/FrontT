@@ -83,16 +83,12 @@ console.log("Блок 1 Задание 3");
 function Nums(...args) {
     // this.prototype = method2;
     this.args = args;
-
-
 }
-
 
 Nums.prototype.getSum = function () {
     return this.args.reduce((accumulator, currentValue) =>
         accumulator + ((Number.isInteger(currentValue)) ? currentValue : 0));
 }
-
 
 Nums.prototype.myFilterReverse = function () {
     arr = this.args;
@@ -115,16 +111,19 @@ console.log(test1sdsd.getSum()); // найдет сумму всех элеме�
 console.log(test1sdsd.myFilterReverse()); // Отфильтруем массив в свойстве args и развернет массив (было [1, 2, 3] -> стало [3, 2, 1])
 
 //     Есть массив [1, 1, 2, 2, 3]
-
 // Создать свой метод getUnique для любых массивов, который отфильтрует массив и оставит в нем только уникальные значения
-
 // Подсказка: чтобы было легче почитайте про метод .includes()
+console.log("Блок 1 Задание 4");
 
-// const arr = [1, 1, 2, 2, 3];
-// const newArr = arr.getUnique(); //  [1, 2, 3]
+const arr14 = [1, 1, 2, 2, 3, 'ddd', 'ddd', 'sss', 'sss', 333, 333, 444444, 444444];
+
+Array.prototype.getUnique = function () {
+    return Array.from(new Set(this))
+}
+
+console.log(arr14.getUnique()); //  [1, 2, 3]
 
 // 5* Есть объект {a: 1, b: 2, c: 3, d: false, e: 0}; Нужно создать 2 метода для любых объектов:
-
 //     метод getKeySum, который найдет сумму значений всех ключей, которые true.
 //     метод reversKey который поменяет местави key и value (ключ и значение)
 
