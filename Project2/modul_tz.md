@@ -31,4 +31,7 @@
         }
         })
 
+https://jsonplaceholder.typicode.com/
 https://html5css.ru/jsref/dom_obj_text.php
+
+https://learn.javascript.ru/promise#promise-all-iterable

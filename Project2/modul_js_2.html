@@ -15,71 +15,130 @@
         crossorigin="anonymous"></script>
 
 <script>
-
     // let clickdel = (elDel) => elDel.remove()
 
-    class User {
-        constructor(item) {
-            this.id = item.id
-            this.name = item.name
-            this.email = item.email
-            this.htmlElement = document.createElement('div')
-            this.htmlElement.innerText = `${this.name} ${this.email}`
-            // this.htmlElement = document.createElement('div')
-            // this.htmlElementInputTitle = this.createInput(this.title)
-            // this.htmlElementInputbody = this.createTextArea(this.body)
-            // this.htmlElement.appendChild(this.htmlElementInputTitle)
-            // this.htmlElement.appendChild(document.createElement('br'))
-            // this.htmlElement.appendChild(this.htmlElementInputbody)
-            // this.htmlElement.appendChild(document.createElement('br'))
+    class PostPage {
+
+        constructor() {
+            this.editPost = false
+
+            let urls = [
+                {
+                    url: 'https://jsonplaceholder.typicode.com/posts',
+                    val: 'dataPosts'
+                },
+                {
+                    url: 'https://jsonplaceholder.typicode.com/users',
+                    val: 'dataUsers'
+                }
+                // https://jsonplaceholder.typicode.com/comments
+            ]
+            // this.dataPosts = []
+            // function getAjax(url, async) {
+            //     var a = []
+            //     $.ajax({
+            //         url: url,
+            //         dataType: 'json',
+            //         type: 'GET',
+            //         data: {},
+            //         async: async,
+            //         success: function (data) {
+            //             a = data
+            //             // this[val] = data;
+            //             //   this.re
+            //             // this.post = new Card(this.dataPosts, 'Post')
+            //         },
+            //         error: function (jqXHR, textStatus, errorThrown) {
+            //             console.log("Error: " + textStatus + " " + errorThrown);
+            //         }
+            //     })
+            //     return a
+            // }
             //
-            // this.buttonEdit = document.createElement('button')
-            // this.buttonEdit.innerHTML = 'Редактировать'
-            // // this.buttonEdit.addEventListener('click', clickdefault)
-            // this.htmlElement.appendChild(this.buttonEdit)
+            // //
+            // //
+            // this.dataUsers = getAjax('https://jsonplaceholder.typicode.com/posts', false)
+
+            // )
+            // }
+
+            $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/users',
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                success: function (data) {
+                    objPostPage.dataUsers = data;
+                    // console.log(data)
+                    // this.post = new Card(this.dataPost, 'Post')
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
             //
-            // this.buttonDel = document.createElement('button')
-            // this.buttonDel.innerHTML = 'Удалить'
-            // // let clickdel = (elDel) => cartObj.clearCart(elDel)
-            // // this.buttonDel.addEventListener('click', clickdel(this))
-            // this.htmlElement.appendChild(this.buttonDel)
+            // this.dataComments = $.ajax({
+            //     url: 'https://jsonplaceholder.typicode.com/comments',
+            //     dataType: 'json',
+            //     type: 'GET',
+            //     data: {},
+            //     success: function (data) {
             //
-            // // let clickdefault = () => cartObj.sortingToLarger()
-            // // buttonDef.addEventListener('click', clickdefault)
+            //         // this.post = new Card(this.dataPost, 'Post')
+            //     },
+            //     error: function (jqXHR, textStatus, errorThrown) {
+            //         console.log("Error: " + textStatus + " " + errorThrown);
+            //     }
+            // })
             //
-            // this.htmlElement.appendChild(document.createElement('p'))
+
+
+            // this.dataPosts = Promise.all([fetch('https://jsonplaceholder.typicode.com/posts')
+            //     , fetch('https://jsonplaceholder.typicode.com/comments'),
+            //     fetch('https://jsonplaceholder.typicode.com/users')]).then(result => result.map((item)=> ) );
+
+            // this.dataPosts = fetch('https://jsonplaceholder.typicode.com/todos/1')
+            //     .then(response => response.json())
+            //     .then(json => console.log(json))
+
+            // .then((response) => response.json())
+            // .then((json) => co);
+
         }
-    }
 
-    class Post {
-        constructor(item) {
-            this.userId = item.userId
-            this.id = item.id
-            this.title = item.title
-            this.body = item.body
-            this.htmlElement = document.createElement('div')
-            this.htmlElementInputTitle = this.createInput(this.title)
-            this.htmlElementInputbody = this.createTextArea(this.body)
-            this.htmlElement.appendChild(this.htmlElementInputTitle)
-            this.htmlElement.appendChild(document.createElement('br'))
-            this.htmlElement.appendChild(this.htmlElementInputbody)
-            this.htmlElement.appendChild(document.createElement('br'))
+        getPosts() {
 
-            this.buttonEdit = document.createElement('button')
-            this.buttonEdit.innerHTML = 'Редактировать'
-            // this.buttonEdit.addEventListener('click', clickdefault)
-            this.htmlElement.appendChild(this.buttonEdit)
+            $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/posts',
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                success: function (data) {
+                    objPostPage.dataPosts = new Card(data)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+        }
 
-            this.buttonDel = document.createElement('button')
-            this.buttonDel.innerHTML = 'Удалить'
-            // let clickdel = (elDel) => cartObj.clearCart(elDel)
-            // this.buttonDel.addEventListener('click', clickdel(this))
-            this.htmlElement.appendChild(this.buttonDel)
-
-            // let clickdefault = () => cartObj.sortingToLarger()
-            // buttonDef.addEventListener('click', clickdefault)
-
-            this.htmlElement.appendChild(document.createElement('p'))
+        getComents(post) {
+            $.ajax({
+                url: `https://jsonplaceholder.typicode.com/comments?postId=${post.id}`,
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                success: function (data) {
+                    objPostPage.dataComments = data.map(item => new Comment(item))
+                    console.log(objPostPage)
+                    objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
+                    // objPostPage.dataComments = data
+                    // objPostPage.dataPosts = new Card(data)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
         }
 
         createInput(value) {
@@ -102,16 +161,88 @@
             inputEl.innerHTML = value
             return inputEl
         }
+
+    }
+
+    class User {
+        constructor(item) {
+            this.id = item.id
+            this.name = item.name
+            this.email = item.email
+            this.htmlElement = document.createElement('div')
+            this.htmlElement.innerText = `${this.name} ${this.email}`
+        }
+    }
+
+
+    class Post {
+        constructor(item) {
+            this.userId = item.userId
+            this.id = item.id
+            this.title = item.title
+            this.body = item.body
+            this.htmlElement = document.createElement('div')
+            this.htmlElementInputTitle = objPostPage.createInput(this.title)
+            this.htmlElementInputbody = objPostPage.createTextArea(this.body)
+            this.htmlElement.appendChild(this.htmlElementInputTitle)
+            this.htmlElement.appendChild(document.createElement('br'))
+            this.htmlElement.appendChild(this.htmlElementInputbody)
+            this.htmlElement.appendChild(document.createElement('br'))
+
+            this.buttonEdit = document.createElement('button')
+            this.buttonEdit.innerHTML = 'Редактировать'
+            // this.buttonEdit.addEventListener('click', clickdefault)
+            this.htmlElement.appendChild(this.buttonEdit)
+
+            this.buttonDel = document.createElement('button')
+            this.buttonDel.innerHTML = 'Удалить'
+            // let clickdel = (elDel) => cartObj.clearCart(elDel)
+            // this.buttonDel.addEventListener('click', clickdel(this))
+            this.htmlElement.appendChild(this.buttonDel)
+
+            // let clickdefault = () => cartObj.sortingToLarger()
+            // buttonDef.addEventListener('click', clickdefault)
+            this.ButShowComments = document.createElement('button')
+            this.ButShowComments.innerHTML = 'Показать коментарии'
+            // this.buttonEdit.addEventListener('click', clickdefault)
+            this.htmlElement.appendChild(this.ButShowComments)
+
+            this.htmlElement.appendChild(document.createElement('p'))
+
+
+        }
+
+
+    }
+
+    class Comment {
+        constructor(item) {
+            this.postId = item.postId
+            this.id = item.id
+            this.name = item.name
+            this.email = item.email
+            this.body = item.body
+            this.htmlElement = document.createElement('div')
+            this.htmlElement.className = "input-group mb-3"
+            this.htmlElement.innerHTML = '<span class="input-group-text" id="basic-addon1">Коментатор:</span>'
+            // this.htmlElement.innerText = `${this.name} ${this.email}:  ${this.body}`
+            this.htmlElementInputTitle = objPostPage.createInput("" + this.name + " :" + this.email)
+            this.htmlElementInputbody = objPostPage.createTextArea(this.body)
+            this.htmlElement.appendChild(this.htmlElementInputTitle)
+            this.htmlElement.appendChild(document.createElement('br'))
+            this.htmlElement.appendChild(this.htmlElementInputbody)
+            this.htmlElement.appendChild(document.createElement('br'))
+        }
     }
 
     class Card {
-        constructor(emplyeeArr, dataClass) {
-            this.dataClass = dataClass
+        constructor(postArrajax) {
+            // this.dataClass = dataClass
             this.htmlElementRoot = document.createElement('div')
             document.body.appendChild(this.htmlElementRoot)
             // массив с обьектами класса , у них в this.htmlElement ссылка на эллемент на форме
             // if (this.dataClass === 'Post') {
-            this.employeeArr = emplyeeArr.map(item => new Post(item))
+            this.postArr = postArrajax.map(item => new Post(item))
             // } else if (this.dataClass === 'User') {
             //     this.employeeArr = emplyeeArr.map(item => new Post(item))
             // }
@@ -119,74 +250,58 @@
 
         }
 
-
         showData() {
             this.clearCard()
-            this.employeeArr.map(item => {
-                    this.htmlElementRoot.appendChild(item.htmlElement)
 
-                    item.buttonDel.addEventListener('click', (event) => item.htmlElement.remove())
-                    // item.buttonEdit.addEventListener('click', (event) => item.htmlElement.remove())
+            this.postArr.map(item => {
+                    this.htmlElementRoot.appendChild(item.htmlElement)
+                    // console.log(objPostPage.dataPosts)
+                    item.buttonDel.addEventListener('click', (event) => {
+                        this.clickDelPost(item.htmlElement, item.id)
+                    })
+                    item.ButShowComments.addEventListener('click', (event) => {
+                        this.clickButShowComments(item)
+                    })
+                    item.buttonEdit.addEventListener('click', (event) => {
+                        // this.clickbuttonEdit(item.htmlElement, item.id)
+
+                    })
+
+                    // objPostPage.dataUsers.find(el => el.id ===item);
                 }
             )
         }
 
         clearCard() {
-            this.employeeArr.map(item => item.htmlElement.remove())
+            this.postArr.map(item => item.htmlElement.remove())
             // document.body.removeChild(this.employeeArr_.htmlElementRoot)
             // this.employeeArr_.htmlElementRoot.removeChild()
         }
 
-        // delCard(elDel) {
-        //     // let elDel = emplyeeArr.find(el => el.id === post.id)
-        //     // if (elDel != undefined) {
-        //         elDel.htmlElement.remove()
-        //     // }
-        //
-        // }
-    }
-
-    class PostPage {
-        constructor() {
-            this.postsAnswer = $.ajax({
-                url: 'https://jsonplaceholder.typicode.com/posts',
-                dataType: 'json',
-                type: 'GET',
-                data: {},
-                success: function (data) {
-                    // console.log(JSON.stringify(data));
-                    // console.log(data);
-                    this.dataPost = data
-                    // PostClass = Post;
-                    this.post = new Card(this.dataPost, 'Post')
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + " " + errorThrown);
-                }
+        clickDelPost(elDel, id) {
+            console.log(objPostPage)
+            elDel.remove()
+            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+                method: 'DELETE',
             })
-
-            this.userAnswer = $.ajax({
-                url: 'https://jsonplaceholder.typicode.com/users',
-                dataType: 'json',
-                type: 'GET',
-                data: {},
-                success: function (data) {
-                    // console.log(JSON.stringify(data));
-                    // console.log(data);
-                    this.dataUser = data
-                    // PostClass = Post;
-                    this.userArray = this.dataUser.map(item => new User(item))
-                    // new Card(this.dataUser, 'Post')
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + " " + errorThrown);
-                }
-            })
-
         }
+
+        clickButShowComments(item) {
+            // console.log(objPostPage)
+            objPostPage.getComents(item)
+            // fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+            //     method: 'DELETE',
+            // })
+        }
+
+
     }
 
-    postPage = new PostPage()
+
+    // start
+    objPostPage = new PostPage()
+    objPostPage.getPosts()
+    console.log(objPostPage.dataPosts)
 </script>
 
 
