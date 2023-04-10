@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+<script>
+
+    // let clickdel = (elDel) => elDel.remove()
+
+    class User {
+        constructor(item) {
+            this.id = item.id
+            this.name = item.name
+            this.email = item.email
+            this.htmlElement = document.createElement('div')
+            this.htmlElement.innerText = `${this.name} ${this.email}`
+            // this.htmlElement = document.createElement('div')
+            // this.htmlElementInputTitle = this.createInput(this.title)
+            // this.htmlElementInputbody = this.createTextArea(this.body)
+            // this.htmlElement.appendChild(this.htmlElementInputTitle)
+            // this.htmlElement.appendChild(document.createElement('br'))
+            // this.htmlElement.appendChild(this.htmlElementInputbody)
+            // this.htmlElement.appendChild(document.createElement('br'))
+            //
+            // this.buttonEdit = document.createElement('button')
+            // this.buttonEdit.innerHTML = 'Редактировать'
+            // // this.buttonEdit.addEventListener('click', clickdefault)
+            // this.htmlElement.appendChild(this.buttonEdit)
+            //
+            // this.buttonDel = document.createElement('button')
+            // this.buttonDel.innerHTML = 'Удалить'
+            // // let clickdel = (elDel) => cartObj.clearCart(elDel)
+            // // this.buttonDel.addEventListener('click', clickdel(this))
+            // this.htmlElement.appendChild(this.buttonDel)
+            //
+            // // let clickdefault = () => cartObj.sortingToLarger()
+            // // buttonDef.addEventListener('click', clickdefault)
+            //
+            // this.htmlElement.appendChild(document.createElement('p'))
+        }
+    }
+
+    class Post {
+        constructor(item) {
+            this.userId = item.userId
+            this.id = item.id
+            this.title = item.title
+            this.body = item.body
+            this.htmlElement = document.createElement('div')
+            this.htmlElementInputTitle = this.createInput(this.title)
+            this.htmlElementInputbody = this.createTextArea(this.body)
+            this.htmlElement.appendChild(this.htmlElementInputTitle)
+            this.htmlElement.appendChild(document.createElement('br'))
+            this.htmlElement.appendChild(this.htmlElementInputbody)
+            this.htmlElement.appendChild(document.createElement('br'))
+
+            this.buttonEdit = document.createElement('button')
+            this.buttonEdit.innerHTML = 'Редактировать'
+            // this.buttonEdit.addEventListener('click', clickdefault)
+            this.htmlElement.appendChild(this.buttonEdit)
+
+            this.buttonDel = document.createElement('button')
+            this.buttonDel.innerHTML = 'Удалить'
+            // let clickdel = (elDel) => cartObj.clearCart(elDel)
+            // this.buttonDel.addEventListener('click', clickdel(this))
+            this.htmlElement.appendChild(this.buttonDel)
+
+            // let clickdefault = () => cartObj.sortingToLarger()
+            // buttonDef.addEventListener('click', clickdefault)
+
+            this.htmlElement.appendChild(document.createElement('p'))
+        }
+
+        createInput(value) {
+            let inputEl = document.createElement('input')
+            inputEl.type = 'text'
+            inputEl.required = true
+            inputEl.readOnly = true
+            inputEl.size = 70
+            inputEl.value = value
+            return inputEl
+        }
+
+        createTextArea(value) {
+            let inputEl = document.createElement('textarea')
+            // inputEl.type = 'text'
+            inputEl.required = true
+            inputEl.readOnly = true
+            inputEl.rows = 5
+            inputEl.cols = 100
+            inputEl.innerHTML = value
+            return inputEl
+        }
+    }
+
+    class Card {
+        constructor(emplyeeArr, dataClass) {
+            this.dataClass = dataClass
+            this.htmlElementRoot = document.createElement('div')
+            document.body.appendChild(this.htmlElementRoot)
+            // массив с обьектами класса , у них в this.htmlElement ссылка на эллемент на форме
+            // if (this.dataClass === 'Post') {
+            this.employeeArr = emplyeeArr.map(item => new Post(item))
+            // } else if (this.dataClass === 'User') {
+            //     this.employeeArr = emplyeeArr.map(item => new Post(item))
+            // }
+            this.showData()
+
+        }
+
+
+        showData() {
+            this.clearCard()
+            this.employeeArr.map(item => {
+                    this.htmlElementRoot.appendChild(item.htmlElement)
+
+                    item.buttonDel.addEventListener('click', (event) => item.htmlElement.remove())
+                    // item.buttonEdit.addEventListener('click', (event) => item.htmlElement.remove())
+                }
+            )
+        }
+
+        clearCard() {
+            this.employeeArr.map(item => item.htmlElement.remove())
+            // document.body.removeChild(this.employeeArr_.htmlElementRoot)
+            // this.employeeArr_.htmlElementRoot.removeChild()
+        }
+
+        // delCard(elDel) {
+        //     // let elDel = emplyeeArr.find(el => el.id === post.id)
+        //     // if (elDel != undefined) {
+        //         elDel.htmlElement.remove()
+        //     // }
+        //
+        // }
+    }
+
+    class PostPage {
+        constructor() {
+            this.postsAnswer = $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/posts',
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                success: function (data) {
+                    // console.log(JSON.stringify(data));
+                    // console.log(data);
+                    this.dataPost = data
+                    // PostClass = Post;
+                    this.post = new Card(this.dataPost, 'Post')
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+
+            this.userAnswer = $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/users',
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                success: function (data) {
+                    // console.log(JSON.stringify(data));
+                    // console.log(data);
+                    this.dataUser = data
+                    // PostClass = Post;
+                    this.userArray = this.dataUser.map(item => new User(item))
+                    // new Card(this.dataUser, 'Post')
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+
+        }
+    }
+
+    postPage = new PostPage()
+</script>
+
+
+</body>
+
+<div>
+
+</div>
+</html>

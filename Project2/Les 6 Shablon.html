@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+<script>
+
+    const emplyeeArr = [
+        {
+            id: 1,
+            name: 'Денис',
+            surname: 'Хрущ',
+            salary: 1010,
+            workExperience: 10, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 2,
+            name: 'Сергей',
+            surname: 'Войлов',
+            salary: 1200,
+            workExperience: 12, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 3,
+            name: 'Татьяна',
+            surname: 'Коваленко',
+            salary: 480,
+            workExperience: 3, /// стаж работы (1 = один месяц)
+            isPrivileges: true, /// льготы
+            gender: 'female'
+        },
+        {
+            id: 4,
+            name: 'Анна',
+            surname: 'Кугир',
+            salary: 2430,
+            workExperience: 20, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'female'
+        },
+        {
+            id: 5,
+            name: 'Татьяна',
+            surname: 'Капустник',
+            salary: 3150,
+            workExperience: 30, /// стаж работы (1 = один месяц)
+            isPrivileges: true, /// льготы
+            gender: 'female'
+        },
+        {
+            id: 6,
+            name: 'Станислав',
+            surname: 'Щелоков',
+            salary: 1730,
+            workExperience: 15, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 7,
+            name: 'Денис',
+            surname: 'Марченко',
+            salary: 5730,
+            workExperience: 45, /// стаж работы (1 = один месяц)
+            isPrivileges: true, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 8,
+            name: 'Максим',
+            surname: 'Меженский',
+            salary: 4190,
+            workExperience: 39, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 9,
+            name: 'Антон',
+            surname: 'Завадский',
+            salary: 790,
+            workExperience: 7, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+        {
+            id: 10,
+            name: 'Инна',
+            surname: 'Скакунова',
+            salary: 5260,
+            workExperience: 49, /// стаж работы (1 = один месяц)
+            isPrivileges: true, /// льготы
+            gender: 'female'
+        },
+        {
+            id: 11,
+            name: 'Игорь',
+            surname: 'Куштым',
+            salary: 300,
+            workExperience: 1, /// стаж работы (1 = один месяц)
+            isPrivileges: false, /// льготы
+            gender: 'male'
+        },
+    ];
+
+
+    class Cart {
+        constructor() {
+            this.htmlElement = document.createElement('div')
+            this.employeeArr_ = []
+            document.body.appendChild(this.htmlElement)
+            // this.showData()
+        }
+
+        showData() {
+            this.clearCart()
+            this.employeeArr_ = emplyeeArr.map(item => new Emplyee(cartObj, item))
+        }
+
+        clearCart() {
+            this.employeeArr_.map(item => item.htmlElement.remove())
+        }
+
+        // isPrivileges_() {
+        //     this.clearCart()
+        //     this.employeeArr_.filter(item => item.isPrivileges == true).map(item =>
+        //         this.htmlElement.appendChild(item.htmlElement)
+        //     )
+        //
+        // }
+
+        isPrivileges(isPrivileges) {
+            this.clearCart()
+            this.employeeArr_.filter(item => item.isPrivileges == isPrivileges).map(item =>
+                this.htmlElement.appendChild(item.htmlElement)
+            )
+
+        }
+
+        sortingToLarger() {
+            console.log([...this.employeeArr_].sort((a, b) => a.salary - b.salary))
+            return [...this.employeeArr_].sort((a, b) => a.salary - b.salary)
+        }
+
+        sortDown() {
+            console.log([...this.employeeArr_].sort((a, b) => b.salary - a.salary))
+            return [...this.employeeArr_].sort((a, b) => b.salary - a.salary)
+        }
+
+        filterMale() {
+            console.log(this.employeeArr_.filter(item => item.gender == 'male'))
+            return this.employeeArr_.filter(item => item.gender == 'male')
+        }
+
+        filterFemale() {
+            console.log(this.employeeArr_.filter(item => item.gender == 'female'))
+            return this.employeeArr_.filter(item => item.gender == 'female')
+        }
+
+        sortByName() {
+            console.log(this.employeeArr_.sort((a, b) => a.name.localeCompare(b.name)))
+            return this.employeeArr_.sort((a, b) => a.name.localeCompare(b.name))
+        }
+
+
+        sortBySurname() {
+            console.log(this.employeeArr_.sort((a, b) => a.surname.localeCompare(b.surname)))
+            return this.employeeArr_.sort((a, b) => a.surname.localeCompare(b.surname))
+        }
+
+        sortByNameSurname() {
+            console.log(this.employeeArr_.sort(function (a, b) {
+                let surnameNameA = a.name + ' ' + a.surname
+                let surnameNameB = b.name + ' ' + a.surname
+                return surnameNameA.localeCompare(surnameNameB)
+            }))
+
+            return this.employeeArr_.sort(function (a, b) {
+                let surnameNameA = a.name + ' ' + a.surname
+                let surnameNameB = b.name + ' ' + a.surname
+                return surnameNameA.localeCompare(surnameNameB)
+            })
+        }
+
+        sortingToLargerEXP() {
+            console.log([...this.employeeArr_].sort((a, b) => a.workExperience - b.workExperience))
+            return [...this.employeeArr_].sort((a, b) => a.workExperience - b.workExperience)
+        }
+
+        sortDownEXP() {
+            console.log([...this.employeeArr_].sort((a, b) => b.workExperience - a.workExperience))
+            return [...this.employeeArr_].sort((a, b) => b.workExperience - a.workExperience)
+        }
+    }
+
+    class Emplyee {
+        constructor(cart, item) {
+            this.id = item.id
+            this.name = item.name
+            this.surname = item.surname
+            this.salary = item.salary
+            this.workExperience = item.workExperience
+            this.isPrivileges = item.isPrivileges
+            this.gender = item.gender
+            this.htmlElement = document.createElement('div')
+            this.htmlElementText = document.createElement('p')
+            this.htmlElementText.innerText = `${this.surname} ${this.name}`
+            this.htmlElement.appendChild(this.htmlElementText)
+            cart.htmlElement.appendChild(this.htmlElement)
+        }
+    }
+
+    let cartObj = new Cart()
+    cartObj.employeeArr_ = emplyeeArr.map(item => new Emplyee(cartObj, item))
+
+    let select = document.createElement('select')
+    select.innerHTML = `<option value="">--Please choose an option--</option>
+    <option value="0">have priv</option>
+    <option value="1">no priv</option>`
+    document.body.insertBefore(select, cartObj.htmlElement)
+
+
+</script>
+</body>
+</html>

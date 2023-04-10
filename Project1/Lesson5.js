@@ -123,6 +123,9 @@ Array.prototype.getUnique = function () {
 
 console.log(arr14.getUnique()); //  [1, 2, 3]
 
+
+
+
 // 5* Есть объект {a: 1, b: 2, c: 3, d: false, e: 0}; Нужно создать 2 метода для любых объектов:
 //     метод getKeySum, который найдет сумму значений всех ключей, которые true.
 //     метод reversKey который поменяет местави key и value (ключ и значение)
