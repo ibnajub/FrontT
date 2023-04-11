@@ -20,93 +20,15 @@
     class PostPage {
 
         constructor() {
-            this.editPost = false
-
-            let urls = [
-                {
-                    url: 'https://jsonplaceholder.typicode.com/posts',
-                    val: 'dataPosts'
-                },
-                {
-                    url: 'https://jsonplaceholder.typicode.com/users',
-                    val: 'dataUsers'
-                }
-                // https://jsonplaceholder.typicode.com/comments
-            ]
-            // this.dataPosts = []
-            // function getAjax(url, async) {
-            //     var a = []
-            //     $.ajax({
-            //         url: url,
-            //         dataType: 'json',
-            //         type: 'GET',
-            //         data: {},
-            //         async: async,
-            //         success: function (data) {
-            //             a = data
-            //             // this[val] = data;
-            //             //   this.re
-            //             // this.post = new Card(this.dataPosts, 'Post')
-            //         },
-            //         error: function (jqXHR, textStatus, errorThrown) {
-            //             console.log("Error: " + textStatus + " " + errorThrown);
-            //         }
-            //     })
-            //     return a
-            // }
-            //
-            // //
-            // //
-            // this.dataUsers = getAjax('https://jsonplaceholder.typicode.com/posts', false)
-
-            // )
-            // }
-
-            $.ajax({
-                url: 'https://jsonplaceholder.typicode.com/users',
-                dataType: 'json',
-                type: 'GET',
-                data: {},
-                success: function (data) {
-                    objPostPage.dataUsers = data;
-                    // console.log(data)
-                    // this.post = new Card(this.dataPost, 'Post')
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + " " + errorThrown);
-                }
-            })
-            //
-            // this.dataComments = $.ajax({
-            //     url: 'https://jsonplaceholder.typicode.com/comments',
-            //     dataType: 'json',
-            //     type: 'GET',
-            //     data: {},
-            //     success: function (data) {
-            //
-            //         // this.post = new Card(this.dataPost, 'Post')
-            //     },
-            //     error: function (jqXHR, textStatus, errorThrown) {
-            //         console.log("Error: " + textStatus + " " + errorThrown);
-            //     }
-            // })
-            //
-
-
-            // this.dataPosts = Promise.all([fetch('https://jsonplaceholder.typicode.com/posts')
-            //     , fetch('https://jsonplaceholder.typicode.com/comments'),
-            //     fetch('https://jsonplaceholder.typicode.com/users')]).then(result => result.map((item)=> ) );
-
-            // this.dataPosts = fetch('https://jsonplaceholder.typicode.com/todos/1')
-            //     .then(response => response.json())
-            //     .then(json => console.log(json))
-
-            // .then((response) => response.json())
-            // .then((json) => co);
+            this.dataPosts = []
+            this.dataUsers = []
+            this.dataComments = []
 
         }
 
+
         getPosts() {
+            this.getUsers()
 
             $.ajax({
                 url: 'https://jsonplaceholder.typicode.com/posts',
@@ -114,7 +36,25 @@
                 type: 'GET',
                 data: {},
                 success: function (data) {
+
                     objPostPage.dataPosts = new Card(data)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+
+        }
+
+        getUsers() {
+            $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/users',
+                dataType: 'json',
+                type: 'GET',
+                data: {},
+                async: false, //юзеров получим первыми не синхронно
+                success: function (data) {
+                    objPostPage.dataUsers = data.map(item => new User(item))
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log("Error: " + textStatus + " " + errorThrown);
@@ -122,18 +62,108 @@
             })
         }
 
-        getComents(post) {
+        delPost(elDel, idP) {
+            // fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+            //     method: 'DELETE',
+            // })
+            $.ajax({
+                url: 'https://jsonplaceholder.typicode.com/posts/${id}',
+                dataType: 'json',
+                type: 'DELETE',
+                data: {},
+                success: function (data) {
+                    elDel.remove()
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+        }
+
+
+        getComents(post, card) {
             $.ajax({
                 url: `https://jsonplaceholder.typicode.com/comments?postId=${post.id}`,
                 dataType: 'json',
                 type: 'GET',
                 data: {},
                 success: function (data) {
-                    objPostPage.dataComments = data.map(item => new Comment(item))
-                    console.log(objPostPage)
+                    // create obj
+                    objPostPage.dataComments = data.map(item => {
+                        // почта в коментах не совпадает с юзерами так что не выводим
+                        // console.log(item.authorName = objPostPage.dataUsers.find(el => item.email === el.email))
+                        return new Comment(item)
+                    })
+
+                    post.htmlElement.appendChild(card.htmlElementAddCommentInputbody)
+                    post.htmlElement.appendChild(card.buttonAddComment)
+                    card.buttonAddComment.addEventListener('click', (event) => card.clickbuttonAddComment())
+
+                    // render obj
                     objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
+                    post.visibleComments = true
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+        }
+
+        addComments(comment) {
+            $.ajax({
+                url: `https://jsonplaceholder.typicode.com/posts/`,
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify({postId: post.postId, name: post.name, email: post.email, body: post.body,}),
+                success: function (data) {
+                    // objPostPage.dataComments = data.map(item => new Comment(item))
+                    // console.log(objPostPage)
+                    // objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
+                    // post.visibleComments = true
                     // objPostPage.dataComments = data
                     // objPostPage.dataPosts = new Card(data)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+        }
+
+        addPost(post) {
+            $.ajax({
+                url: `https://jsonplaceholder.typicode.com/posts/`,
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify({userId: post.userId, title: post.title, body: post.body,}),
+                success: function (data) {
+                    // objPostPage.dataComments = data.map(item => new Comment(item))
+                    // console.log(objPostPage)
+                    // objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
+                    // post.visibleComments = true
+                    // objPostPage.dataComments = data
+                    // objPostPage.dataPosts = new Card(data)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error: " + textStatus + " " + errorThrown);
+                }
+            })
+        }
+
+        updatePost(itemPost) {
+            $.ajax({
+                url: `https://jsonplaceholder.typicode.com/posts/${itemPost.id}`,
+                dataType: 'json',
+                type: 'PATCH',
+                data: JSON.stringify({
+                    title: itemPost.title,
+                    body: itemPost.body,
+                }),
+                success: function (data) {
+                    itemPost.htmlElementInputTitle.readOnly = true
+                    itemPost.htmlElementInputbody.readOnly = true
+
+                    itemPost.editPost = false
+                    itemPost.buttonEdit.innerHTML = 'Редактировать'
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log("Error: " + textStatus + " " + errorThrown);
@@ -146,6 +176,7 @@
             inputEl.type = 'text'
             inputEl.required = true
             inputEl.readOnly = true
+            inputEl.style.border = 'none'
             inputEl.size = 70
             inputEl.value = value
             return inputEl
@@ -156,6 +187,7 @@
             // inputEl.type = 'text'
             inputEl.required = true
             inputEl.readOnly = true
+            // inputEl.style.border = 'none'
             inputEl.rows = 5
             inputEl.cols = 100
             inputEl.innerHTML = value
@@ -170,19 +202,25 @@
             this.name = item.name
             this.email = item.email
             this.htmlElement = document.createElement('div')
-            this.htmlElement.innerText = `${this.name} ${this.email}`
+            this.htmlElementInput = objPostPage.createInput(`==${this.name} ${this.email}==`)
+            this.htmlElement.appendChild(this.htmlElementInput)
+            // this.htmlElement.innerText =
         }
     }
 
 
     class Post {
         constructor(item) {
+            this.editPost = false
+            this.visibleComments = false
+
             this.userId = item.userId
             this.id = item.id
             this.title = item.title
             this.body = item.body
             this.htmlElement = document.createElement('div')
-            this.htmlElementInputTitle = objPostPage.createInput(this.title)
+            this.htmlElementInputTitle = objPostPage.createInput(
+                `id:${this.id} userId:${this.userId} --${this.title}`)
             this.htmlElementInputbody = objPostPage.createTextArea(this.body)
             this.htmlElement.appendChild(this.htmlElementInputTitle)
             this.htmlElement.appendChild(document.createElement('br'))
@@ -202,21 +240,24 @@
 
             // let clickdefault = () => cartObj.sortingToLarger()
             // buttonDef.addEventListener('click', clickdefault)
-            this.ButShowComments = document.createElement('button')
-            this.ButShowComments.innerHTML = 'Показать коментарии'
+            this.butShowComments = document.createElement('button')
+            this.butShowComments.innerHTML = 'Показать коментарии'
             // this.buttonEdit.addEventListener('click', clickdefault)
-            this.htmlElement.appendChild(this.ButShowComments)
+            this.htmlElement.appendChild(this.butShowComments)
+
+            this.authorName = item.authorName
+            this.htmlElement.appendChild(this.authorName.htmlElement)
+            console.log(this.authorName)
 
             this.htmlElement.appendChild(document.createElement('p'))
 
 
         }
-
-
     }
 
     class Comment {
         constructor(item) {
+            this.authorName = item.authorName
             this.postId = item.postId
             this.id = item.id
             this.name = item.name
@@ -224,47 +265,84 @@
             this.body = item.body
             this.htmlElement = document.createElement('div')
             this.htmlElement.className = "input-group mb-3"
-            this.htmlElement.innerHTML = '<span class="input-group-text" id="basic-addon1">Коментатор:</span>'
+            this.htmlElement.innerHTML = `<span class="input-group-text" id="basic-addon1">Коментатор: ${this.authorName}</span>`
             // this.htmlElement.innerText = `${this.name} ${this.email}:  ${this.body}`
             this.htmlElementInputTitle = objPostPage.createInput("" + this.name + " :" + this.email)
+            // this.htmlElementInputTitle.style.border = 'border: dashed red'
             this.htmlElementInputbody = objPostPage.createTextArea(this.body)
+            // this.htmlElementInputbody.style.border = 'border: dashed red'
             this.htmlElement.appendChild(this.htmlElementInputTitle)
             this.htmlElement.appendChild(document.createElement('br'))
             this.htmlElement.appendChild(this.htmlElementInputbody)
             this.htmlElement.appendChild(document.createElement('br'))
+
         }
     }
 
     class Card {
         constructor(postArrajax) {
+            this.addedPost = false
             // this.dataClass = dataClass
             this.htmlElementRoot = document.createElement('div')
-            document.body.appendChild(this.htmlElementRoot)
+
+            this.FistElemHtml = document.body.appendChild(this.htmlElementRoot)
+            this.SecondElemHtml = this.htmlElementRoot.appendChild(document.createElement('br'))
+            this.buttonAddPost = document.createElement('button')
+            this.buttonAddPost.innerHTML = 'Добавить пост'
+            this.htmlElementRoot.appendChild(this.buttonAddPost)
+            this.buttonAddPost.addEventListener('click', (event) => this.clickAddPost())
+
+            // инпуты добавления поста
+            this.htmlElementAddInputTitle = objPostPage.createInput('')
+            this.htmlElementAddInputbody = objPostPage.createTextArea('')
+            this.htmlElementAddInputTitle.readOnly = false
+            this.htmlElementAddInputbody.readOnly = false
+            this.htmlElementAddInputTitle.style.border = 'double #32a1ce'
+            this.htmlElementAddInputbody.style.border = 'thick double #32a1ce'
+
+            // инпуты вставки коментариев
+            // this.htmlElementAddCommentName = objPostPage.createInput('')
+            // this.htmlElementAddCommentEmail = objPostPage.createInput('')
+            this.htmlElementAddCommentInputbody = objPostPage.createTextArea('')
+            this.htmlElementAddCommentInputbody.readOnly = false
+            // this.htmlElementAddCommentName.style.border = 'double #32a1ce'
+            // this.htmlElementAddCommentEmail.style.border = 'double #32a1ce'
+            this.htmlElementAddCommentInputbody.style.border = 'thick double #32a1ce'
+            this.buttonAddComment = document.createElement('button')
+            this.buttonAddComment.innerHTML = 'Добавить комент'
+
+
             // массив с обьектами класса , у них в this.htmlElement ссылка на эллемент на форме
             // if (this.dataClass === 'Post') {
-            this.postArr = postArrajax.map(item => new Post(item))
+            this.postArr = postArrajax.map(item => {
+                item.authorName = objPostPage.dataUsers.find(el => el.id === item.userId)
+                // console.log(objPostPage.dataUsers.find(el => el.id === item.userId))
+                return new Post(item)
+            })
             // } else if (this.dataClass === 'User') {
             //     this.employeeArr = emplyeeArr.map(item => new Post(item))
             // }
             this.showData()
+
 
         }
 
         showData() {
             this.clearCard()
 
-            this.postArr.map(item => {
-                    this.htmlElementRoot.appendChild(item.htmlElement)
+            this.postArr.map(itemPost => {
+                    // добавим на экран хтмл
+                    this.htmlElementRoot.appendChild(itemPost.htmlElement)
                     // console.log(objPostPage.dataPosts)
-                    item.buttonDel.addEventListener('click', (event) => {
-                        this.clickDelPost(item.htmlElement, item.id)
-                    })
-                    item.ButShowComments.addEventListener('click', (event) => {
-                        this.clickButShowComments(item)
-                    })
-                    item.buttonEdit.addEventListener('click', (event) => {
-                        // this.clickbuttonEdit(item.htmlElement, item.id)
 
+                    itemPost.buttonDel.addEventListener('click', (event) => {
+                        this.clickDelPost(itemPost.htmlElement, itemPost.id)
+                    })
+                    itemPost.butShowComments.addEventListener('click', (event) => {
+                        this.clickButShowComments(itemPost)
+                    })
+                    itemPost.buttonEdit.addEventListener('click', (event) => {
+                        this.clickbuttonEdit(itemPost)
                     })
 
                     // objPostPage.dataUsers.find(el => el.id ===item);
@@ -279,29 +357,84 @@
         }
 
         clickDelPost(elDel, id) {
-            console.log(objPostPage)
-            elDel.remove()
-            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-                method: 'DELETE',
-            })
+            objPostPage.delPost(elDel, id)
+
         }
 
-        clickButShowComments(item) {
+        clickButShowComments(itemPost) {
             // console.log(objPostPage)
-            objPostPage.getComents(item)
+            if (itemPost.visibleComments == false) {
+                // send comment
+                itemPost.butShowComments.innerHTML = 'Скрыть коментарии'
+
+
+                objPostPage.getComents(itemPost, this)
+
+
+            } else {
+                // off coments
+                // objPostPage.getComents(itemPost)
+                objPostPage.dataComments.map(item => item.htmlElement.remove())
+                itemPost.visibleComments = false
+                itemPost.butShowComments.innerHTML = 'Показать коментарии'
+                this.htmlElementAddCommentInputbody.remove()
+                this.buttonAddComment.remove()
+            }
             // fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
             //     method: 'DELETE',
             // })
         }
 
+        clickbuttonEdit(itemPost) {
+            if (itemPost.editPost == false) {
+                // режим редактирования
+                itemPost.buttonEdit.innerHTML = 'Сохранить'
+                itemPost.htmlElementInputTitle.readOnly = false
+                itemPost.htmlElementInputbody.readOnly = false
+
+                itemPost.editPost = true
+                // objPostPage.dataComments.map(item => item.htmlElement.remove())
+            } else {
+                // кнопка отправки на сервер
+                // для отдладки в htmlElementInputTitle  есть ID и прочее , в раб базе нужно его сбюда не ложить
+                itemPost.title = itemPost.htmlElementInputTitle.value
+                itemPost.body = itemPost.htmlElementInputbody.value
+                objPostPage.updatePost(itemPost)
+
+            }
+
+        }
+
+        clickAddPost() {
+            if (this.addedPost == false) {
+                // режим создания
+                this.buttonAddPost.innerHTML = 'Сохранить новый пост'
+                this.addedPost = true
+                this.SecondElemHtml.parentNode.insertBefore(this.htmlElementAddInputTitle, this.SecondElemHtml)
+                this.SecondElemHtml.parentNode.insertBefore(this.htmlElementAddInputbody, this.SecondElemHtml)
+            } else {
+                // кнопка отправки
+                let newPost = {
+                    userId: 1,
+                    title: this.htmlElementAddInputTitle.value,
+                    body: this.htmlElementAddInputbody.value,
+                }
+                // objPostPage.addPost(newPost)
+
+                this.addedPost = false
+                this.buttonAddPost.innerHTML = 'Добавить пост'
+                this.htmlElementAddInputTitle.remove()
+                this.htmlElementAddInputbody.remove()
+                // this.showData()
+            }
+        }
 
     }
-
 
     // start
     objPostPage = new PostPage()
     objPostPage.getPosts()
-    console.log(objPostPage.dataPosts)
+    // console.log(objPostPage.dataPosts)
 </script>
 
 

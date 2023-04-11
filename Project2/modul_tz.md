@@ -35,3 +35,9 @@ https://jsonplaceholder.typicode.com/
 https://html5css.ru/jsref/dom_obj_text.php
 
 https://learn.javascript.ru/promise#promise-all-iterable
+
+https://developer.mozilla.org/ru/docs/Web/API/Node/insertBefore
+
+https://developer.mozilla.org/en-US/docs/web/CSS/background-color
+
+https://learn.javascript.ru/promise#promise-all-iterable
