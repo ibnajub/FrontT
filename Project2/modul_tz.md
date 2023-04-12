@@ -32,6 +32,9 @@
         })
 
 https://jsonplaceholder.typicode.com/
+
+https://naydyonovdanil.gitbook.io/javascript/dlya-izucheniya/javascript/objects
+
 https://html5css.ru/jsref/dom_obj_text.php
 
 https://learn.javascript.ru/promise#promise-all-iterable

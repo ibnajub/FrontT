@@ -10,6 +10,27 @@
 </head>
 <body>
 
+
+<!--ТЗ на модуль!!!!!!!-->
+<!--https://api.jquery.com/-->
+<!--        https://jsonplaceholder.typicode.com/-->
+<!--        список постов-->
+<!--        для каждого поста есть 2 кнопки-->
+<!--        1 кнопка переводит в режим редактирование и на ней во время режима редактирования появляеться текст сохранить ,-->
+<!--        после нажатия на нее повторно мы отправляем данные на сервер и обновляем поле и выходим из режима редактирования-->
+<!--        2 кнопка должно удалять пост и на клиенте и на сервере-->
+
+<!--        вверху у вас должна быть 2 инпута титл и боди с кнопкой сохранить для создания новых постов-->
+
+<!--        посты на страницы должны быть отсортерованы сначала новые-->
+
+<!--у поста должен быть никнейм автора-->
+<!--снизу с права-->
+
+<!--коменты под постами-->
+<!--возможность оставлять коммент-->
+<!--и у коментов тоже автор-->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
@@ -97,7 +118,8 @@
 
                     post.htmlElement.appendChild(card.htmlElementAddCommentInputbody)
                     post.htmlElement.appendChild(card.buttonAddComment)
-                    card.buttonAddComment.addEventListener('click', (event) => card.clickbuttonAddComment())
+                    // card.buttonAddComment.addEventListener('click', (event) => card.clickbuttonAddComment())
+                    card.buttonAddComment.addEventListener('click', (event) => card.clickbuttonAddComment(post))
 
                     // render obj
                     objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
@@ -109,19 +131,19 @@
             })
         }
 
-        addComments(comment) {
+        addComments(comment, card) {
             $.ajax({
                 url: `https://jsonplaceholder.typicode.com/posts/`,
                 dataType: 'json',
                 type: 'POST',
-                data: JSON.stringify({postId: post.postId, name: post.name, email: post.email, body: post.body,}),
+                data: JSON.stringify({
+                    postId: comment.postId,
+                    name: comment.name,
+                    email: comment.email,
+                    body: comment.body,
+                }),
                 success: function (data) {
-                    // objPostPage.dataComments = data.map(item => new Comment(item))
-                    // console.log(objPostPage)
-                    // objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
-                    // post.visibleComments = true
-                    // objPostPage.dataComments = data
-                    // objPostPage.dataPosts = new Card(data)
+                    card.htmlElementAddCommentInputbody.value = ''
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log("Error: " + textStatus + " " + errorThrown);
@@ -129,13 +151,27 @@
             })
         }
 
-        addPost(post) {
+        addPost(newPost, card) {
             $.ajax({
                 url: `https://jsonplaceholder.typicode.com/posts/`,
                 dataType: 'json',
                 type: 'POST',
-                data: JSON.stringify({userId: post.userId, title: post.title, body: post.body,}),
+                data: JSON.stringify({userId: newPost.userId, title: newPost.title, newPost: newPost.body,}),
                 success: function (data) {
+                    card.addedPost = false
+                    card.buttonAddPost.innerHTML = 'Добавить пост'
+                    card.htmlElementAddInputTitle.value = ''
+                    card.htmlElementAddInputbody.value = ''
+                    card.htmlElementAddInputTitle.remove()
+                    card.htmlElementAddInputbody.remove()
+                    // имитируем ответ от сервера и добаволяем его
+                    newPost.id = 3243999924
+                    // добавляем автора
+                    newPost.authorName = objPostPage.dataUsers.find(el => el.id === newPost.userId)
+
+                    card.postArr.unshift(new Post(newPost))
+                    card.showData()
+
                     // objPostPage.dataComments = data.map(item => new Comment(item))
                     // console.log(objPostPage)
                     // objPostPage.dataComments.map(item => post.htmlElement.appendChild(item.htmlElement))
@@ -214,13 +250,17 @@
             this.editPost = false
             this.visibleComments = false
 
+            this.authorName = item.authorName
+            // this.htmlElement.appendChild(this.authorName.htmlElement)
+            // console.log(this.authorName)
+
             this.userId = item.userId
             this.id = item.id
             this.title = item.title
             this.body = item.body
             this.htmlElement = document.createElement('div')
             this.htmlElementInputTitle = objPostPage.createInput(
-                `id:${this.id} userId:${this.userId} --${this.title}`)
+                `id:${this.id} userId:${this.userId}:${this.authorName.name} --${this.title}`)
             this.htmlElementInputbody = objPostPage.createTextArea(this.body)
             this.htmlElement.appendChild(this.htmlElementInputTitle)
             this.htmlElement.appendChild(document.createElement('br'))
@@ -234,20 +274,18 @@
 
             this.buttonDel = document.createElement('button')
             this.buttonDel.innerHTML = 'Удалить'
-            // let clickdel = (elDel) => cartObj.clearCart(elDel)
-            // this.buttonDel.addEventListener('click', clickdel(this))
             this.htmlElement.appendChild(this.buttonDel)
 
             // let clickdefault = () => cartObj.sortingToLarger()
             // buttonDef.addEventListener('click', clickdefault)
             this.butShowComments = document.createElement('button')
             this.butShowComments.innerHTML = 'Показать коментарии'
-            // this.buttonEdit.addEventListener('click', clickdefault)
             this.htmlElement.appendChild(this.butShowComments)
 
-            this.authorName = item.authorName
-            this.htmlElement.appendChild(this.authorName.htmlElement)
-            console.log(this.authorName)
+            this.butuserName = document.createElement('button')
+            this.butuserName.innerHTML = `${this.authorName.name}`
+            this.htmlElement.appendChild(this.butuserName)
+
 
             this.htmlElement.appendChild(document.createElement('p'))
 
@@ -313,8 +351,9 @@
 
 
             // массив с обьектами класса , у них в this.htmlElement ссылка на эллемент на форме
-            // if (this.dataClass === 'Post') {
-            this.postArr = postArrajax.map(item => {
+            //  обратная сортировка
+            let sortedDownPostArrajax = postArrajax.sort((a, b) => b.id - a.id)
+            this.postArr = sortedDownPostArrajax.map(item => {
                 item.authorName = objPostPage.dataUsers.find(el => el.id === item.userId)
                 // console.log(objPostPage.dataUsers.find(el => el.id === item.userId))
                 return new Post(item)
@@ -331,15 +370,18 @@
             this.clearCard()
 
             this.postArr.map(itemPost => {
-                    // добавим на экран хтмл
-                    this.htmlElementRoot.appendChild(itemPost.htmlElement)
-                    // console.log(objPostPage.dataPosts)
+                // добавим автора в обьект
+                // itemPost.authorName = objPostPage.dataUsers.find(el => el.id === item.userId)
 
-                    itemPost.buttonDel.addEventListener('click', (event) => {
-                        this.clickDelPost(itemPost.htmlElement, itemPost.id)
-                    })
-                    itemPost.butShowComments.addEventListener('click', (event) => {
-                        this.clickButShowComments(itemPost)
+                // добавим на экран хтмл
+                this.htmlElementRoot.appendChild(itemPost.htmlElement)
+                // console.log(objPostPage.dataPosts)
+
+                itemPost.buttonDel.addEventListener('click', (event) => {
+                    this.clickDelPost(itemPost.htmlElement, itemPost.id)
+                })
+                itemPost.butShowComments.addEventListener('click', (event) => {
+                    this.clickButShowComments(itemPost)
                     })
                     itemPost.buttonEdit.addEventListener('click', (event) => {
                         this.clickbuttonEdit(itemPost)
@@ -385,6 +427,20 @@
             // })
         }
 
+        clickbuttonAddComment(post) {
+
+            // кнопка отправки
+            let newComment = {
+                postId: post.id,
+                name: 'aaa',
+                email: 'email222',
+                body: this.htmlElementAddCommentInputbody.value,
+            }
+            objPostPage.addComments(newComment, this)
+
+            // }
+        }
+
         clickbuttonEdit(itemPost) {
             if (itemPost.editPost == false) {
                 // режим редактирования
@@ -419,15 +475,16 @@
                     title: this.htmlElementAddInputTitle.value,
                     body: this.htmlElementAddInputbody.value,
                 }
-                // objPostPage.addPost(newPost)
+                objPostPage.addPost(newPost, this)
 
-                this.addedPost = false
-                this.buttonAddPost.innerHTML = 'Добавить пост'
-                this.htmlElementAddInputTitle.remove()
-                this.htmlElementAddInputbody.remove()
+                // this.addedPost = false
+                // this.buttonAddPost.innerHTML = 'Добавить пост'
+                // this.htmlElementAddInputTitle.remove()
+                // this.htmlElementAddInputbody.remove()
                 // this.showData()
             }
         }
+
 
     }
 
@@ -444,3 +501,5 @@
 
 </div>
 </html>
+
+
